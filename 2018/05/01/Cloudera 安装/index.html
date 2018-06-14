@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="技术," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="离线安装cloudera 5.13.3本版本的cloudera默认自带spark1.6 升级到spark2 软件版本说明  服务器版本 3.10.0-327.el7.centos  cloudera 5.13.3  cloudera manager 5.13.3  下文简称CM  jdk 1.8.0_172  mysql 5.7.17   相应包下载地址  cm镜像地址  http://archi">
+<meta name="keywords" content="技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cloudera 5.13.3 离线安装">
+<meta property="og:url" content="http://www.blog.littlepig.tech/2018/05/01/Cloudera 安装/index.html">
+<meta property="og:site_name" content="littlepig flying">
+<meta property="og:description" content="离线安装cloudera 5.13.3本版本的cloudera默认自带spark1.6 升级到spark2 软件版本说明  服务器版本 3.10.0-327.el7.centos  cloudera 5.13.3  cloudera manager 5.13.3  下文简称CM  jdk 1.8.0_172  mysql 5.7.17   相应包下载地址  cm镜像地址  http://archi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.blog.littlepig.tech/images/npt.jpg">
+<meta property="og:image" content="http://www.blog.littlepig.tech/images/ntp1.jpg">
+<meta property="og:updated_time" content="2018-06-14T09:44:28.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cloudera 5.13.3 离线安装">
+<meta name="twitter:description" content="离线安装cloudera 5.13.3本版本的cloudera默认自带spark1.6 升级到spark2 软件版本说明  服务器版本 3.10.0-327.el7.centos  cloudera 5.13.3  cloudera manager 5.13.3  下文简称CM  jdk 1.8.0_172  mysql 5.7.17   相应包下载地址  cm镜像地址  http://archi">
+<meta name="twitter:image" content="http://www.blog.littlepig.tech/images/npt.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.blog.littlepig.tech/2018/05/01/Cloudera 安装/"/>
+
+
+
+
+
+  <title>Cloudera 5.13.3 离线安装 | littlepig flying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">littlepig flying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.blog.littlepig.tech/2018/05/01/Cloudera 安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="miracle li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="littlepig flying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Cloudera 5.13.3 离线安装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T21:01:24+08:00">
+                2018-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloudera-hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">cloudera hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/01/Cloudera 安装/" class="leancloud_visitors" data-flag-title="Cloudera 5.13.3 离线安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>离线安装cloudera 5.13.3<br>本版本的cloudera默认自带spark1.6 升级到spark2</p>
+<h3 id="软件版本说明"><a href="#软件版本说明" class="headerlink" title="软件版本说明"></a>软件版本说明</h3><hr>
+<ol>
+<li><p>服务器版本 3.10.0-327.el7.centos</p>
+</li>
+<li><p>cloudera 5.13.3</p>
+</li>
+<li><p>cloudera manager 5.13.3  下文简称CM</p>
+</li>
+<li><p>jdk 1.8.0_172</p>
+</li>
+<li><p>mysql 5.7.17</p>
+</li>
+</ol>
+<h3 id="相应包下载地址"><a href="#相应包下载地址" class="headerlink" title="相应包下载地址"></a>相应包下载地址</h3><hr>
+<ol>
+<li><p>cm镜像地址</p>
+<blockquote>
+<p><a href="http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.13.3_x86_64.tar.gz" target="_blank" rel="noopener">http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.13.3_x86_64.tar.gz</a></p>
+</blockquote>
+</li>
+<li><p>CDH镜像地址：(注意与服务器版本保持一致，我的是centos el7 所以下载el7的包)</p>
+<blockquote>
+<p><a href="http://archive.cloudera.com/cdh5/parcels/5.13.3/CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/parcels/5.13.3/CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel</a><br><a href="http://archive.cloudera.com/cdh5/parcels/5.13.3/CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha1" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/parcels/5.13.3/CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha1</a><br><a href="http://archive.cloudera.com/cdh5/parcels/5.13.3/manifest.json" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/parcels/5.13.3/manifest.json</a></p>
+</blockquote>
+</li>
+<li><p>mysql 下载地址</p>
+<blockquote>
+<p>在镜像<a href="http://mirrors.sohu.com/mysql/MySQL-5.7/中下载相应包" target="_blank" rel="noopener">http://mirrors.sohu.com/mysql/MySQL-5.7/中下载相应包</a><br>mysql-community-client-5.7.17-1.el7.x86_64.rpm<br>mysql-community-libs-5.7.17-1.el7.x86_64.rpm<br>mysql-community-common-5.7.17-1.el7.x86_64.rpm<br>mysql-community-libs-compat-5.7.21-1.el7.x86_64.rpm<br>mysql-community-server-5.7.21-1.el7.x86_64.rpm<br><a href="http://dev.mysql.com/downloads/connector/j/" target="_blank" rel="noopener">http://dev.mysql.com/downloads/connector/j/</a> 下载mysql 的jdbc驱动</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><hr>
+<h5 id="网络配置（所有节点）"><a href="#网络配置（所有节点）" class="headerlink" title="网络配置（所有节点）"></a>网络配置（所有节点）</h5><p> 修改各个主机名，主机名不要有下划线，我这是6台机器，主机名分别是hadoop0~hadoop5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/hostname</span><br></pre></td></tr></table></figure></p>
+<p> 修改network 并使之生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network</span><br><span class="line">修改为：</span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=hadoopX</span><br><span class="line"></span><br><span class="line">使之生效：</span><br><span class="line">source /etc/sysconfig/network</span><br></pre></td></tr></table></figure></p>
+<p> 修改hosts<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hosts</span><br><span class="line">添加：</span><br><span class="line">10.10.XX.130         hadoop0</span><br><span class="line">10.10.XX.131         hadoop1</span><br><span class="line">10.10.XX.132         hadoop2</span><br><span class="line">10.10.XX.133         hadoop3</span><br><span class="line">10.10.XX.134         hadoop4</span><br><span class="line">10.10.XX.135         hadoop5</span><br></pre></td></tr></table></figure></p>
+<p> 重启网络<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$service network restart</span><br></pre></td></tr></table></figure></p>
+<h5 id="设置SSH免密登录（所有节点）"><a href="#设置SSH免密登录（所有节点）" class="headerlink" title="设置SSH免密登录（所有节点）"></a>设置SSH免密登录（所有节点）</h5><p> 在所有节点执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">每台机器执行，一直回车 生成无密码密钥</span><br><span class="line">$ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">将公钥添加到认证文件中：</span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys        设置authorized_keys的访问权限：</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line">将密钥发送到其他需要免密登录的机器中 每台机器都要执行</span><br><span class="line">比如 在hadoop0 中执行时要执行5次，修改hadoop1 ~hadoop5</span><br><span class="line">cat ~/.ssh/id_rsa.pub | ssh -p 22 root@hadoop1 ‘cat &gt;&gt; ~/.ssh/authorized_keys’</span><br><span class="line"></span><br><span class="line">测试 在hadoop0 中执行</span><br><span class="line">ssh hadoop1</span><br><span class="line">不需要密码登录到hadoop1中</span><br></pre></td></tr></table></figure></p>
+<h5 id="关闭防火墙-所有节点"><a href="#关闭防火墙-所有节点" class="headerlink" title="关闭防火墙 (所有节点)"></a>关闭防火墙 (所有节点)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//临时关闭</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">//禁止开机启动</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+<h5 id="设置集群时间同步-（所有节点）"><a href="#设置集群时间同步-（所有节点）" class="headerlink" title="设置集群时间同步 （所有节点）"></a>设置集群时间同步 （所有节点）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.在集群中所有节点上安装ntp</span><br><span class="line">yum install ntp</span><br><span class="line"></span><br><span class="line">2.所有节点设置时区，这里设置为中国所用时间</span><br><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line">3.在server节点上启动ntp服务</span><br><span class="line">systemctl start ntpd</span><br><span class="line">systemctl enable ntpd</span><br><span class="line"></span><br><span class="line">4.在server节点上设置现在的准确时间</span><br><span class="line">timedatectl set-time HH:MM:SS</span><br><span class="line"></span><br><span class="line">5.在server节点上设置其ntp服务器为其自身，同时设置可以接受连接服务的客户端，是通过更改/etc/ntp.conf文件来实现的，其中server设置127.127.1.0为其自身</span><br><span class="line">vi /etc/ntp.conf</span><br></pre></td></tr></table></figure>
+<p><img src="/images/npt.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">6.重启ntpd服务</span><br><span class="line">systemctl restart ntpd</span><br><span class="line"></span><br><span class="line">7.在client节点上设置ntp服务器为server节点</span><br><span class="line">vi /etc/ntp.conf</span><br></pre></td></tr></table></figure></p>
+<p>  <img src="/images/ntp1.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">8.在client节点上同步server的时间</span><br><span class="line">ntpdate hadoop0</span><br><span class="line"></span><br><span class="line">9.client节点启动ntpd服务</span><br><span class="line"></span><br><span class="line">systemctl start ntpd</span><br><span class="line">systemctl enable ntpd</span><br><span class="line"></span><br><span class="line">10.所有节点启动时间同步</span><br><span class="line">timedatectl set-ntp yes</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装-jdk-（所有节点）注意一定放在-usr-java-下！！！"><a href="#安装-jdk-（所有节点）注意一定放在-usr-java-下！！！" class="headerlink" title="安装 jdk （所有节点）注意一定放在/usr/java/下！！！"></a>安装 jdk （所有节点）注意一定放在/usr/java/下！！！</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1.卸载自带的OpenJdk</span><br><span class="line">rpm -qa | grep java #查询java相关的包</span><br><span class="line">rpm -e --nodeps XXX #包名卸载之。</span><br><span class="line">2. 创建解压目录</span><br><span class="line">mkdir -p /usr/java/</span><br><span class="line">3. 在jdk压缩包所在目录下执行</span><br><span class="line">tar -zxvf jdk-8u172-linux-x64.tar.gz -C /usr/java/</span><br><span class="line">4、修改环境变量</span><br><span class="line">vi /etc/profile</span><br><span class="line">添加：</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_172</span><br><span class="line">export JRE_HOME=$JAVA_HOME/jre</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib/tools.jar</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">5、使之生效</span><br><span class="line">source /etc/profile</span><br><span class="line">6、验证</span><br><span class="line">java -version</span><br><span class="line">显示正确版本号</span><br></pre></td></tr></table></figure>
+<h4 id="安装-mysql-（主节点）"><a href="#安装-mysql-（主节点）" class="headerlink" title="安装 mysql （主节点）"></a>安装 mysql （主节点）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1. centos 7 默认安装的是mariadb，需要先卸载再安装</span><br><span class="line">rpm -qa | grep mariadb #查看安装信息</span><br><span class="line">rpm -e mariadb-libs* --nodeps #根据查找到的软件包信息卸载</span><br><span class="line">2. 安装mysql</span><br><span class="line">yum install libnuma*</span><br><span class="line">rpm -ivh mysql-community-common-5.7.17-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-5.7.17-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-client-5.7.17-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-server-5.7.17-1.el7.x86_64.rpm</span><br><span class="line">3. 设置开机启动</span><br><span class="line">chkconfig mysqld on #开机启动</span><br><span class="line">service mysqld start #启动mysql服务，</span><br><span class="line">mysqladmin -u root password &apos;xxxx&apos; #设置root密码</span><br><span class="line">4、进入mysql命令</span><br><span class="line">myslq -uroot -p #输入密码进入mysql控制台</span><br><span class="line">5、创建数据库</span><br><span class="line">create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line"> #hive</span><br><span class="line">create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">#activity monitor</span><br><span class="line">create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">6. 授权root用户在主节点拥有所有数据库的访问权限</span><br><span class="line">grant all privileges on *.* to &apos;root&apos;@&apos;n1&apos; identified by &apos;xxxx&apos; with grant option;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<h4 id="安装-cm-cdh"><a href="#安装-cm-cdh" class="headerlink" title="安装 cm+cdh"></a>安装 cm+cdh</h4><ol>
+<li><p>主节点解压cloudera-manager-centos7-cm5.13.3_x86_64.tar.gz 到/opt下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf cloudera-manager-centos7-cm5.13.3_x86_64.tar.gz -C /opt/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为cm 建立mysql数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 将下载的mysql jdbc驱动包解压，并将 jar复制到 cm相应目录下</span><br><span class="line">tar -zxvf mysql-connector-java-5.1.45.tar.gz</span><br><span class="line">cp mysql-connector-java-5.1.45-bin.jar /opt/cm-5.13.3/share/cmf/lib</span><br><span class="line"></span><br><span class="line">2.在主节点初始化cm数据库</span><br><span class="line">/opt/cm-5.13.3/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -pxxxx --scm-host localhost scm scm scm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>agent 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/cm-5.13.3/etc/cloudera-scm-agent/config.ini</span><br><span class="line"></span><br><span class="line">修改server_host为主节点的主机名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同步agent 到其他节点 同步到hadoop1-hadoop5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/cm-5.13.3 root@hadoop1:/opt/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在所有节点创建cloudera-scm用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd --system --home=/opt/cm-5.13.3/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment &quot;Cloudera SCM User&quot; cloudera-scm</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>6、 准备 CDH parcels<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">将下载的CDH相关parcel copy到/opt/cloudera/parcel-repo</span><br><span class="line">cp CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel /opt/cloudera/parcel-repo/</span><br><span class="line">cp CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha1 /opt/cloudera/parcel-repo/</span><br><span class="line">cp manifest.json /opt/cloudera/parcel-repo/</span><br><span class="line"></span><br><span class="line">修改CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha1 为CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha</span><br><span class="line">mv CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha1 CDH-5.13.3-1.cdh5.13.3.p0.2-el7.parcel.sha</span><br></pre></td></tr></table></figure></p>
+<ol start="7">
+<li>启动cm<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">相关启动脚本 主节点启动server+agent 其他节点启动agent</span><br><span class="line"></span><br><span class="line">通过/opt/cm-5.13.3/etc/init.d/cloudera-scm-server start启动服务端。</span><br><span class="line"></span><br><span class="line">通过/opt/cm-5.13.3/etc/init.d/cloudera-scm-agent start启动Agent服务。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="cdh-安装配置"><a href="#cdh-安装配置" class="headerlink" title="cdh 安装配置"></a>cdh 安装配置</h4><p>启动cm后就可以在cm控制台中安装cdh并配置了。<br>由于当时安装时没有相关截图，就不写啦<br>期间会遇到连接mysql时报错，需要相应python包的安装<br>其他问题通过提示可解决</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>好人一生平安</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.jpg" alt="miracle li 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+	<div>
+  
+    ﻿
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br/>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br/>
+<p style="font-size: 10px;line-height: 30px"><a href="http://blog.littlepig.tech" style="color:#258FC6">miracleLi' Notes</a> by <a href="http://blog.littlepig.tech" style="color:#258FC6">miracle li</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br/>
+由<a href="http://blog.littlepig.tech" style="color:#258FC6">miracle li</a>创作并维护的<a href="http://blog.littlepig.tech" style="color:#258FC6">littlepig Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br/>
+本文首发于<a href="http://blog.littlepig.tech" style="color:#258FC6">miracleli' Notes</a> 博客（ <a href="http://blog.littlepig.tech" style="color:#258FC6">http://blog.littlepig.tech</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+  
+</div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/my.jpg"
+                alt="miracle li" />
+            
+              <p class="site-author-name" itemprop="name">miracle li</p>
+              <p class="site-description motion-element" itemprop="description">生活如此美好~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件版本说明"><span class="nav-number">1.</span> <span class="nav-text">软件版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相应包下载地址"><span class="nav-number">2.</span> <span class="nav-text">相应包下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境配置"><span class="nav-number">3.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#网络配置（所有节点）"><span class="nav-number">3.0.1.</span> <span class="nav-text">网络配置（所有节点）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置SSH免密登录（所有节点）"><span class="nav-number">3.0.2.</span> <span class="nav-text">设置SSH免密登录（所有节点）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关闭防火墙-所有节点"><span class="nav-number">3.0.3.</span> <span class="nav-text">关闭防火墙 (所有节点)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置集群时间同步-（所有节点）"><span class="nav-number">3.0.4.</span> <span class="nav-text">设置集群时间同步 （所有节点）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-jdk-（所有节点）注意一定放在-usr-java-下！！！"><span class="nav-number">3.1.</span> <span class="nav-text">安装 jdk （所有节点）注意一定放在/usr/java/下！！！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-mysql-（主节点）"><span class="nav-number">3.2.</span> <span class="nav-text">安装 mysql （主节点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-cm-cdh"><span class="nav-number">3.3.</span> <span class="nav-text">安装 cm+cdh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cdh-安装配置"><span class="nav-number">3.4.</span> <span class="nav-text">cdh 安装配置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">miracle li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("kCkBxkcVVng8qBmFaWLETVLI-gzGzoHsz", "6hGKI4hLPH4HVYYUWgxF57mU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
