@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+<meta name="description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting Started 开始Introduction 简介Quickstart will get you up and running on a single-node, standalone instance of HBase. 快速开">
 <meta name="keywords" content="官翻系列">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hbase文档官翻">
+<meta property="og:title" content="Hbase文档2-QuickStart">
 <meta property="og:url" content="http://www.blog.littlepig.tech/2018/06/01/Hbase文档2-QuickStart/index.html">
 <meta property="og:site_name" content="littlepig flying">
-<meta property="og:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+<meta property="og:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting Started 开始Introduction 简介Quickstart will get you up and running on a single-node, standalone instance of HBase. 快速开">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-19T03:47:46.771Z">
+<meta property="og:updated_time" content="2018-06-19T06:27:52.574Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hbase文档官翻">
-<meta name="twitter:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+<meta name="twitter:title" content="Hbase文档2-QuickStart">
+<meta name="twitter:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting Started 开始Introduction 简介Quickstart will get you up and running on a single-node, standalone instance of HBase. 快速开">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>Hbase文档官翻 | littlepig flying</title>
+  <title>Hbase文档2-QuickStart | littlepig flying</title>
   
 
 
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hbase文档官翻</h1>
+          <h1 class="post-title" itemprop="name headline">Hbase文档2-QuickStart</h1>
         
 
         <div class="post-meta">
@@ -322,7 +322,7 @@
 
           
           
-             <span id="/2018/06/01/Hbase文档2-QuickStart/" class="leancloud_visitors" data-flag-title="Hbase文档官翻">
+             <span id="/2018/06/01/Hbase文档2-QuickStart/" class="leancloud_visitors" data-flag-title="Hbase文档2-QuickStart">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -359,12 +359,13 @@
 
       
         <p>本文是Hbase官翻系列文章，官方文档在<a href="http://hbase.apache.org/book.html后查看" target="_blank" rel="noopener">http://hbase.apache.org/book.html后查看</a><br>本文采用段落式英文 段落式中文格式翻译。</p>
-<h4 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h4><h5 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h5><p>Quickstart will get you up and running on a single-node, standalone instance of HBase.</p>
-<h4 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>快速开始将要带你运行一个单节点的、独立的Hbase实例。</p>
+<h4 id="Getting-Started-开始"><a href="#Getting-Started-开始" class="headerlink" title="Getting Started 开始"></a>Getting Started 开始</h4><h5 id="Introduction-简介"><a href="#Introduction-简介" class="headerlink" title="Introduction 简介"></a>Introduction 简介</h5><p>Quickstart will get you up and running on a single-node, standalone instance of HBase.</p>
+<p>快速开始将要带你运行一个单节点的、独立的Hbase实例。</p>
 <hr>
-<h5 id="Quick-Start-Standalone-HBase"><a href="#Quick-Start-Standalone-HBase" class="headerlink" title="Quick Start - Standalone HBase"></a>Quick Start - Standalone HBase</h5><h5 id="快速开始-单节点的Hbase实例"><a href="#快速开始-单节点的Hbase实例" class="headerlink" title="快速开始 - 单节点的Hbase实例"></a>快速开始 - 单节点的Hbase实例</h5><p>This section describes the setup of a single-node standalone HBase. A standalone instance has all HBase daemons — the Master, RegionServers, and ZooKeeper — running in a single JVM persisting to the local filesystem. It is our most basic deploy profile. We will show you how to create a table in HBase using the hbase shell CLI, insert rows into the table, perform put and scan operations against the table, enable or disable the table, and start and stop HBase.<br>Apart from downloading HBase, this procedure should take less than 10 minutes.<br>这一部分描述了设置（single-node standalone）单节点独立Hbase的步骤。一个单节点独立的Hbase实例包含所有的Hbase 守护进程 - the Master,RegionServers,and Zookeeper - 运行在一个单JVM、本地的文件系统中。这是一个最基础的部署文件。我们将要展示怎么在Hbase中通过Hbase shell CII 创建一个表、在表中插入行、在表中执行put和scan操作，enable 或是 disable 一个表、开始或停止Hbase服务。<br>除了下载Hbase，这些过程应该不超过10分钟。</p>
-<h6 id="JDK-Version-Requirements"><a href="#JDK-Version-Requirements" class="headerlink" title="JDK Version Requirements"></a>JDK Version Requirements</h6><h6 id="JDK-版本要求"><a href="#JDK-版本要求" class="headerlink" title="JDK 版本要求"></a>JDK 版本要求</h6><p>HBase requires that a JDK be installed. See Java for information about supported JDK versions.<br>Hbase需要JDK被事先安装。通过JAVA信息查看支持的JDK版本。</p>
-<h6 id="Get-Started-with-HBase"><a href="#Get-Started-with-HBase" class="headerlink" title="Get Started with HBase"></a>Get Started with HBase</h6><h6 id="HBase-开始"><a href="#HBase-开始" class="headerlink" title="HBase 开始"></a>HBase 开始</h6><p>Procedure: Download, Configure, and Start HBase in Standalone Mode</p>
+<h5 id="Quick-Start-Standalone-HBase-快速开始-单节点的Hbase实例"><a href="#Quick-Start-Standalone-HBase-快速开始-单节点的Hbase实例" class="headerlink" title="Quick Start - Standalone HBase 快速开始 - 单节点的Hbase实例"></a>Quick Start - Standalone HBase 快速开始 - 单节点的Hbase实例</h5><p>This section describes the setup of a single-node standalone HBase. A standalone instance has all HBase daemons — the Master, RegionServers, and ZooKeeper — running in a single JVM persisting to the local filesystem. It is our most basic deploy profile. We will show you how to create a table in HBase using the hbase shell CLI, insert rows into the table, perform put and scan operations against the table, enable or disable the table, and start and stop HBase.<br>Apart from downloading HBase, this procedure should take less than 10 minutes.  </p>
+<p>这一部分描述了设置（single-node standalone）单节点独立Hbase的步骤。一个单节点独立的Hbase实例包含所有的Hbase 守护进程 - the Master,RegionServers,and Zookeeper - 运行在一个单JVM、本地的文件系统中。这是一个最基础的部署文件。我们将要展示怎么在Hbase中通过Hbase shell CII 创建一个表、在表中插入行、在表中执行put和scan操作，enable 或是 disable 一个表、开始或停止Hbase服务。<br>除了下载Hbase，这些过程应该不超过10分钟。</p>
+<h6 id="JDK-Version-Requirements-JDK-版本要求"><a href="#JDK-Version-Requirements-JDK-版本要求" class="headerlink" title="JDK Version Requirements  JDK 版本要求"></a>JDK Version Requirements  JDK 版本要求</h6><p>HBase requires that a JDK be installed. See Java for information about supported JDK versions.<br>Hbase需要JDK被事先安装。通过JAVA信息查看支持的JDK版本。</p>
+<h6 id="Get-Started-with-HBase-HBase-开始"><a href="#Get-Started-with-HBase-HBase-开始" class="headerlink" title="Get Started with HBase HBase 开始"></a>Get Started with HBase HBase 开始</h6><p>Procedure: Download, Configure, and Start HBase in Standalone Mode</p>
 <ol>
 <li>Choose a download site from this list of Apache Download Mirrors. Click on the suggested top link. This will take you to a mirror of HBase Releases. Click on the folder named stable and then download the binary file that ends in .tar.gz to your local filesystem. Do not download the file ending in src.tar.gz for now.<br>过程：  下载、配置、在单机模式下启动HBase</li>
 </ol>
@@ -648,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-Started"><span class="nav-number">1.</span> <span class="nav-text">Getting Started</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Quick-Start-Standalone-HBase"><span class="nav-number">2.2.</span> <span class="nav-text">Quick Start - Standalone HBase</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速开始-单节点的Hbase实例"><span class="nav-number">2.3.</span> <span class="nav-text">快速开始 - 单节点的Hbase实例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#JDK-Version-Requirements"><span class="nav-number">2.3.1.</span> <span class="nav-text">JDK Version Requirements</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#JDK-版本要求"><span class="nav-number">2.3.2.</span> <span class="nav-text">JDK 版本要求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Get-Started-with-HBase"><span class="nav-number">2.3.3.</span> <span class="nav-text">Get Started with HBase</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HBase-开始"><span class="nav-number">2.3.4.</span> <span class="nav-text">HBase 开始</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-Started-开始"><span class="nav-number">1.</span> <span class="nav-text">Getting Started 开始</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Introduction-简介"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction 简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Quick-Start-Standalone-HBase-快速开始-单节点的Hbase实例"><span class="nav-number">1.2.</span> <span class="nav-text">Quick Start - Standalone HBase 快速开始 - 单节点的Hbase实例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#JDK-Version-Requirements-JDK-版本要求"><span class="nav-number">1.2.1.</span> <span class="nav-text">JDK Version Requirements  JDK 版本要求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Get-Started-with-HBase-HBase-开始"><span class="nav-number">1.2.2.</span> <span class="nav-text">Get Started with HBase HBase 开始</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
