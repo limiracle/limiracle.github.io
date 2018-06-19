@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="官翻系列," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+<meta name="keywords" content="官翻系列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hbase文档官翻">
+<meta property="og:url" content="http://www.blog.littlepig.tech/2018/06/01/Hbase 官翻2-QuickStart/index.html">
+<meta property="og:site_name" content="littlepig flying">
+<meta property="og:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-19T03:47:46.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hbase文档官翻">
+<meta name="twitter:description" content="本文是Hbase官翻系列文章，官方文档在http://hbase.apache.org/book.html后查看本文采用段落式英文 段落式中文格式翻译。 Getting StartedIntroductionQuickstart will get you up and running on a single-node, standalone instance of HBase. 开始简介快速开始将">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.blog.littlepig.tech/2018/06/01/Hbase 官翻2-QuickStart/"/>
+
+
+
+
+
+  <title>Hbase文档官翻 | littlepig flying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">littlepig flying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.blog.littlepig.tech/2018/06/01/Hbase 官翻2-QuickStart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="miracle li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/my.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="littlepig flying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hbase文档官翻</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T21:01:24+08:00">
+                2018-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/01/Hbase 官翻2-QuickStart/" class="leancloud_visitors" data-flag-title="Hbase文档官翻">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是Hbase官翻系列文章，官方文档在<a href="http://hbase.apache.org/book.html后查看" target="_blank" rel="noopener">http://hbase.apache.org/book.html后查看</a><br>本文采用段落式英文 段落式中文格式翻译。</p>
+<h4 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h4><h5 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h5><p>Quickstart will get you up and running on a single-node, standalone instance of HBase.</p>
+<h4 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>快速开始将要带你运行一个单节点的、独立的Hbase实例。</p>
+<hr>
+<h5 id="Quick-Start-Standalone-HBase"><a href="#Quick-Start-Standalone-HBase" class="headerlink" title="Quick Start - Standalone HBase"></a>Quick Start - Standalone HBase</h5><h5 id="快速开始-单节点的Hbase实例"><a href="#快速开始-单节点的Hbase实例" class="headerlink" title="快速开始 - 单节点的Hbase实例"></a>快速开始 - 单节点的Hbase实例</h5><p>This section describes the setup of a single-node standalone HBase. A standalone instance has all HBase daemons — the Master, RegionServers, and ZooKeeper — running in a single JVM persisting to the local filesystem. It is our most basic deploy profile. We will show you how to create a table in HBase using the hbase shell CLI, insert rows into the table, perform put and scan operations against the table, enable or disable the table, and start and stop HBase.<br>Apart from downloading HBase, this procedure should take less than 10 minutes.<br>这一部分描述了设置（single-node standalone）单节点独立Hbase的步骤。一个单节点独立的Hbase实例包含所有的Hbase 守护进程 - the Master,RegionServers,and Zookeeper - 运行在一个单JVM、本地的文件系统中。这是一个最基础的部署文件。我们将要展示怎么在Hbase中通过Hbase shell CII 创建一个表、在表中插入行、在表中执行put和scan操作，enable 或是 disable 一个表、开始或停止Hbase服务。<br>除了下载Hbase，这些过程应该不超过10分钟。</p>
+<h6 id="JDK-Version-Requirements"><a href="#JDK-Version-Requirements" class="headerlink" title="JDK Version Requirements"></a>JDK Version Requirements</h6><h6 id="JDK-版本要求"><a href="#JDK-版本要求" class="headerlink" title="JDK 版本要求"></a>JDK 版本要求</h6><p>HBase requires that a JDK be installed. See Java for information about supported JDK versions.<br>Hbase需要JDK被事先安装。通过JAVA信息查看支持的JDK版本。</p>
+<h6 id="Get-Started-with-HBase"><a href="#Get-Started-with-HBase" class="headerlink" title="Get Started with HBase"></a>Get Started with HBase</h6><h6 id="HBase-开始"><a href="#HBase-开始" class="headerlink" title="HBase 开始"></a>HBase 开始</h6><p>Procedure: Download, Configure, and Start HBase in Standalone Mode</p>
+<ol>
+<li>Choose a download site from this list of Apache Download Mirrors. Click on the suggested top link. This will take you to a mirror of HBase Releases. Click on the folder named stable and then download the binary file that ends in .tar.gz to your local filesystem. Do not download the file ending in src.tar.gz for now.<br>过程：  下载、配置、在单机模式下启动HBase</li>
+</ol>
+<ol start="2">
+<li><p>Extract the downloaded file, and change to the newly-created directory.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar xzvf hbase-3.0.0-SNAPSHOT-bin.tar.gz</span><br><span class="line">$ cd hbase-3.0.0-SNAPSHOT/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>You are required to set the JAVA_HOME environment variable before starting HBase. You can set the variable via your operating system’s usual mechanism, but HBase provides a central mechanism, conf/hbase-env.sh. Edit this file, uncomment the line starting with JAVA_HOME, and set it to the appropriate location for your operating system. The JAVA_HOME variable should be set to a directory which contains the executable file bin/java. Most modern Linux operating systems provide a mechanism, such as /usr/bin/alternatives on RHEL or CentOS, for transparently switching between versions of executables such as Java. In this case, you can set JAVA_HOME to the directory containing the symbolic link to bin/java, which is usually /usr.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Edit conf/hbase-site.xml, which is the main HBase configuration file. At this time, you need to specify the directory on the local filesystem where HBase and ZooKeeper write data and acknowledge some risks. By default, a new directory is created under /tmp. Many servers are configured to delete the contents of /tmp upon reboot, so you should store the data elsewhere. The following configuration will store HBase’s data in the hbase directory, in the home directory of the user called testuser. Paste the <property> tags beneath the <configuration> tags, which should be empty in a new HBase install.<br><em>Example 1. Example hbase-site.xml for Standalone HBase</em></configuration></property></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;file:///home/testuser/hbase&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.zookeeper.property.dataDir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/home/testuser/zookeeper&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.unsafe.stream.capability.enforce&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">    &lt;description&gt;</span><br><span class="line">      Controls whether HBase will check for stream capabilities (hflush/hsync).</span><br><span class="line"></span><br><span class="line">      Disable this if you intend to run on LocalFileSystem, denoted by a rootdir</span><br><span class="line">      with the &apos;file://&apos; scheme, but be mindful of the NOTE below.</span><br><span class="line"></span><br><span class="line">      WARNING: Setting this to false blinds you to potential data loss and</span><br><span class="line">      inconsistent system state in the event of process and/or node failures. If</span><br><span class="line">      HBase is complaining of an inability to use hsync or hflush it&apos;s most</span><br><span class="line">      likely not a false positive.</span><br><span class="line">    &lt;/description&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>You do not need to create the HBase data directory. HBase will do this for you. If you create the directory, HBase will attempt to do a migration, which is not what you want.<br><em>The hbase.rootdir in the above example points to a directory in the local filesystem. The ‘file://‘ prefix is how we denote local filesystem. You should take the WARNING present in the configuration example to heart. In standalone mode HBase makes use of the local filesystem abstraction from the Apache Hadoop project. That abstraction doesn’t provide the durability promises that HBase needs to operate safely. This is fine for local development and testing use cases where the cost of cluster failure is well contained. It is not appropriate for production deployments; eventually you will lose data.</em></p>
+<p>To home HBase on an existing instance of HDFS, set the hbase.rootdir to point at a directory up on your instance: e.g. hdfs://namenode.example.org:8020/hbase. For more on this variant, see the section below on Standalone HBase over HDFS.</p>
+<ol>
+<li>The bin/start-hbase.sh script is provided as a convenient way to start HBase. Issue the command, and if all goes well, a message is logged to standard output showing that HBase started successfully. You can use the jps command to verify that you have one running process called HMaster. In standalone mode HBase runs all daemons within this single JVM, i.e. the HMaster, a single HRegionServer, and the ZooKeeper daemon. Go to <a href="http://localhost:16010" target="_blank" rel="noopener">http://localhost:16010</a> to view the HBase Web UI.<br><em>Java needs to be installed and available. If you get an error indicating that Java is not installed, but it is on your system, perhaps in a non-standard location, edit the conf/hbase-env.sh file and modify the JAVA_HOME setting to point to the directory that contains bin/java on your system.</em>  </li>
+</ol>
+<p><em>Procedure: Use HBase For the First Time</em></p>
+<ol>
+<li><p>Connect to HBase.<br>Connect to your running instance of HBase using the hbase shell command, located in the bin/ directory of your HBase install. In this example, some usage and version information that is printed when you start HBase Shell has been omitted. The HBase Shell prompt ends with a &gt; character.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/hbase shell</span><br><span class="line">hbase(main):001:0&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Display HBase Shell Help Text.<br>Type help and press Enter, to display some basic usage information for HBase Shell, as well as several example commands. Notice that table names, rows, columns all must be enclosed in quote characters.</p>
+</li>
+<li><p>Create a table.<br>Use the create command to create a new table. You must specify the table name and the ColumnFamily name.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt; create &apos;test&apos;, &apos;cf&apos;</span><br><span class="line">0 row(s) in 0.4170 seconds</span><br><span class="line">=&gt; Hbase::Table - test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>List Information About your Table<br>Use the list command to confirm your table exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):002:0&gt; list &apos;test&apos;</span><br><span class="line">TABLE</span><br><span class="line">test</span><br><span class="line">1 row(s) in 0.0180 seconds</span><br><span class="line">=&gt; [&quot;test&quot;]</span><br><span class="line">Now use the describe command to see details, including configuration defaults</span><br><span class="line">hbase(main):003:0&gt; describe &apos;test&apos;</span><br><span class="line">Table test is ENABLED</span><br><span class="line">test</span><br><span class="line">COLUMN FAMILIES DESCRIPTION</span><br><span class="line">&#123;NAME =&gt; &apos;cf&apos;, VERSIONS =&gt; &apos;1&apos;, EVICT_BLOCKS_ON_CLOSE =&gt; &apos;false&apos;, NEW_VERSION_BEHAVIOR =&gt; &apos;false&apos;, KEEP_DELETED_CELLS =&gt; &apos;FALSE&apos;, CACHE_DATA_ON_WRITE =&gt;</span><br><span class="line">&apos;false&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, TTL =&gt; &apos;FOREVER&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, REPLICATION_SCOPE =&gt; &apos;0&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, CACHE_INDEX_ON_WRITE =&gt; &apos;f</span><br><span class="line">alse&apos;, IN_MEMORY =&gt; &apos;false&apos;, CACHE_BLOOMS_ON_WRITE =&gt; &apos;false&apos;, PREFETCH_BLOCKS_ON_OPEN =&gt; &apos;false&apos;, COMPRESSION =&gt; &apos;NONE&apos;, BLOCKCACHE =&gt; &apos;true&apos;, BLOCKSIZE</span><br><span class="line"> =&gt; &apos;65536&apos;&#125;</span><br><span class="line">1 row(s)</span><br><span class="line">Took 0.9998 seconds</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Put data into your table.<br>To put data into your table, use the put command.   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):003:0&gt; put &apos;test&apos;, &apos;row1&apos;, &apos;cf:a&apos;, &apos;value1&apos;</span><br><span class="line">0 row(s) in 0.0850 seconds</span><br><span class="line">hbase(main):004:0&gt; put &apos;test&apos;, &apos;row2&apos;, &apos;cf:b&apos;, &apos;value2&apos;</span><br><span class="line">0 row(s) in 0.0110 seconds</span><br><span class="line">hbase(main):005:0&gt; put &apos;test&apos;, &apos;row3&apos;, &apos;cf:c&apos;, &apos;value3&apos;</span><br><span class="line">0 row(s) in 0.0100 seconds</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Here, we insert three values, one at a time. The first insert is at row1, column cf:a, with a value of value1. Columns in HBase are comprised of a column family prefix, cf in this example, followed by a colon and then a column qualifier suffix, a in this case.</p>
+<ol start="6">
+<li><p>Scan the table for all data at once.<br>One of the ways to get data from HBase is to scan. Use the scan command to scan the table for data. You can limit your scan, but for now, all data is fetched.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):006:0&gt; scan &apos;test&apos;</span><br><span class="line">ROW                                      COLUMN+CELL</span><br><span class="line"> row1                                    column=cf:a, timestamp=1421762485768, value=value1</span><br><span class="line"> row2                                    column=cf:b, timestamp=1421762491785, value=value2</span><br><span class="line"> row3                                    column=cf:c, timestamp=1421762496210, value=value3</span><br><span class="line">3 row(s) in 0.0230 seconds</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Get a single row of data.<br>To get a single row of data at a time, use the get command.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):007:0&gt; get &apos;test&apos;, &apos;row1&apos;</span><br><span class="line">COLUMN                                   CELL</span><br><span class="line"> cf:a                                    timestamp=1421762485768, value=value1</span><br><span class="line">1 row(s) in 0.0350 seconds</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Disable a table.<br>If you want to delete a table or change its settings, as well as in some other situations, you need to disable the table first, using the disable command. You can re-enable it using the enable command.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):008:0&gt; disable &apos;test&apos;</span><br><span class="line">0 row(s) in 1.1820 seconds</span><br><span class="line">hbase(main):009:0&gt; enable &apos;test&apos;</span><br><span class="line">0 row(s) in 0.1770 seconds</span><br><span class="line">Disable the table again if you tested the enable command above:</span><br><span class="line">hbase(main):010:0&gt; disable &apos;test&apos;</span><br><span class="line">0 row(s) in 1.1820 seconds</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Drop the table.<br>To drop (delete) a table, use the drop command.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):011:0&gt; drop &apos;test&apos;</span><br><span class="line">0 row(s) in 0.1370 seconds</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Exit the HBase Shell.<br>To exit the HBase Shell and disconnect from your cluster, use the quit command. HBase is still running in the background.</p>
+</li>
+</ol>
+<p><em>Procedure: Stop HBase</em>  </p>
+<ol>
+<li><p>In the same way that the bin/start-hbase.sh script is provided to conveniently start all HBase daemons, the bin/stop-hbase.sh script stops them.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/stop-hbase.sh</span><br><span class="line">stopping hbase....................</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>After issuing the command, it can take several minutes for the processes to shut down. Use the jps to be sure that the HMaster and HRegionServer processes are shut down.</p>
+</li>
+</ol>
+<p>The above has shown you how to start and stop a standalone instance of HBase. In the next sections we give a quick overview of other modes of hbase deploy.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>好人一生平安</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.jpg" alt="miracle li 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+	<div>
+  
+    ﻿
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br/>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br/>
+<p style="font-size: 10px;line-height: 30px"><a href="http://blog.littlepig.tech" style="color:#258FC6">miracleLi' Notes</a> by <a href="http://blog.littlepig.tech" style="color:#258FC6">miracle li</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br/>
+由<a href="http://blog.littlepig.tech" style="color:#258FC6">miracle li</a>创作并维护的<a href="http://blog.littlepig.tech" style="color:#258FC6">littlepig Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br/>
+本文首发于<a href="http://blog.littlepig.tech" style="color:#258FC6">miracleli' Notes</a> 博客（ <a href="http://blog.littlepig.tech" style="color:#258FC6">http://blog.littlepig.tech</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+  
+</div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/官翻系列/" rel="tag"># 官翻系列</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/01/Cloudera 安装/" rel="next" title="Cloudera 5.13.3 离线安装">
+                <i class="fa fa-chevron-left"></i> Cloudera 5.13.3 离线安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/01/Hbase 官翻1-前言/" rel="prev" title="Hbase文档官翻1-前言">
+                Hbase文档官翻1-前言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/my.jpg"
+                alt="miracle li" />
+            
+              <p class="site-author-name" itemprop="name">miracle li</p>
+              <p class="site-description motion-element" itemprop="description">生活如此美好~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-Started"><span class="nav-number">1.</span> <span class="nav-text">Getting Started</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Quick-Start-Standalone-HBase"><span class="nav-number">2.2.</span> <span class="nav-text">Quick Start - Standalone HBase</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速开始-单节点的Hbase实例"><span class="nav-number">2.3.</span> <span class="nav-text">快速开始 - 单节点的Hbase实例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#JDK-Version-Requirements"><span class="nav-number">2.3.1.</span> <span class="nav-text">JDK Version Requirements</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#JDK-版本要求"><span class="nav-number">2.3.2.</span> <span class="nav-text">JDK 版本要求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Get-Started-with-HBase"><span class="nav-number">2.3.3.</span> <span class="nav-text">Get Started with HBase</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HBase-开始"><span class="nav-number">2.3.4.</span> <span class="nav-text">HBase 开始</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">miracle li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">little pig flying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("kCkBxkcVVng8qBmFaWLETVLI-gzGzoHsz", "6hGKI4hLPH4HVYYUWgxF57mU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
